@@ -1,13 +1,22 @@
 <template>
-    <div>
-        <nav>
-            <h2>This is a nav</h2>
+    <div id="app">
+        <nav class="nav has-shadow">
+            <div class="container">
+                <a href="/">
+                    <img src="http://bit.ly/vue-img"
+                         alt="Vue SPA" />
+                </a>
+            </div>
         </nav>
-        <main>
-            <h2>This is a main</h2>
-        </main>
-        <footer>
-            <h2>This is a footer</h2>
+        <section class="main-section section"></section>
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    Follow us on
+                    <a href="https://twitter.com/bstavroulakis"
+                       target="_blank">Twitter</a>
+                </div>
+            </div>
         </footer>
     </div>
 </template>
@@ -17,3 +26,7 @@
     name: 'Layout'
   }
 </script>
+<style lang="scss">
+@import "~bulma";
+
+</style>
