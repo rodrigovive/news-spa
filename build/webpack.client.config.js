@@ -9,7 +9,7 @@ config.plugins.push(
 )
 config.module.rules
   .filter(x => {
-    return x.loader == 'vue-loader'
+    return x.loader === 'vue-loader'
   })
-  .forEach(x => x.options.extractCSS = true)
+  .forEach(x => (x.options.extractCSS = true))
 module.exports = config
