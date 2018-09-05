@@ -11,22 +11,19 @@
 
 <script>
   import Post from './Post.vue'
-  import appService from '../app.service'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'Category',
     components: {
       'app-post': Post
     },
-    data () {
-      return {
-        id: this.$route.params.id,
-        posts: []
-      }
+    computed: {
+      ...mapGetters('postsModule', ['posts'])
     },
     methods: {
       loadPosts () {
         let categoryId = 2
-        switch (this.id) {
+        switch (this.$route.params.id) {
           case 'front-end': {
             categoryId = 2
             break
@@ -39,14 +36,11 @@
             this.posts = []
           }
         }
-        appService.getPosts(categoryId).then(data => {
-          this.posts = data
-        })
+        this.$store.dispatch('postsModule/updateCategory', categoryId)
       }
     },
     watch: {
       '$route' (to, from) {
-        this.id = to.params.id
         this.loadPosts()
       }
     },
