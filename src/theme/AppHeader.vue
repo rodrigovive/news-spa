@@ -12,15 +12,27 @@
                 Mobile
             </router-link>
             <router-link to="/login" class="navbar-item is-tab" exact>
-                Login
+                <span v-if="isAuthenticated">Logout</span><span v-else>Login</span>
             </router-link>
         </div>
     </nav>
 </template>
 
 <script>
+  import eventBus from '../event-bus'
+
   export default {
-    name: 'AppHeader'
+    name: 'AppHeader',
+    data () {
+      return {
+        isAuthenticated: false
+      }
+    },
+    created () {
+      eventBus.$on('authStatusUpdate', isAuthenticated => {
+        this.isAuthenticated = isAuthenticated
+      })
+    }
   }
 </script>
 
