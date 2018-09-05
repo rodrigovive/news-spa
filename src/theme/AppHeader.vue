@@ -19,21 +19,13 @@
 </template>
 
 <script>
-  import eventBus from '../event-bus'
-
-  export default {
-    name: 'AppHeader',
-    data () {
-      return {
-        isAuthenticated: false
+    import { mapGetters } from 'vuex'
+    export default {
+      name: 'AppHeader',
+      computed: {
+        ...mapGetters(['isAuthenticated'])
       }
-    },
-    created () {
-      eventBus.$on('authStatusUpdate', isAuthenticated => {
-        this.isAuthenticated = isAuthenticated
-      })
     }
-  }
 </script>
 
 <style scoped>

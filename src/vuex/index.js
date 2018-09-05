@@ -8,7 +8,26 @@ const state = {
 }
 
 const store = new Vuex.Store({
-  state
+  state,
+  getters: {
+    isAuthenticated: (state) => {
+      return state.isAuthenticated
+    }
+  },
+  actions: {
+    logout (context) {
+      context.commit('logout')
+    }
+  },
+  mutations: {
+    logout (state) {
+      if (typeof windows !== 'undefined') {
+        window.localStorage.setItem('token', null)
+        window.localStorage.setItem('tokenExpiration', null)
+      }
+      state.isAuthenticated = false
+    }
+  }
 })
 
 export default store
