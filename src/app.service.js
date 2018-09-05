@@ -11,6 +11,19 @@ const appService = {
         })
     })
   },
+  getProfile () {
+    return new Promise((resolve) => {
+      axios.get('/services/profile.php',
+        {
+          headers: {
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+          }
+        })
+        .then(response => {
+          resolve(response.data)
+        })
+    })
+  },
   login (credentials) {
     return new Promise((resolve, reject) => {
       axios.post('/services/auth.php', credentials)

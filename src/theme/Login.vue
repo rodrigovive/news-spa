@@ -1,7 +1,9 @@
 <template>
     <div class="content">
         <div v-if="isAuthenticated">
-            Hello authenticated user
+            Usuario identificado
+            <p>Name: {{profile.firstName}}</p>
+            <p>Favorite Sandwich: {{profile.favoriteSandwich}}</p>
             <button v-on:click="logout()" class="button is-primary">
                 Logout
             </button>
@@ -60,7 +62,18 @@
       return {
         username: '', // bill
         password: '', // vuejs
-        isAuthenticated: false
+        isAuthenticated: false,
+        profile: {}
+      }
+    },
+    watch: {
+      isAuthenticated: function (val) {
+        if (val) {
+          appService.getProfile()
+            .then(profile => {
+              this.profile = profile
+            })
+        }
       }
     },
     methods: {
