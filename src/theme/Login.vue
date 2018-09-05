@@ -2,8 +2,6 @@
     <div class="content">
         <div v-if="isAuthenticated">
             Usuario identificado
-            <p>Name: {{profile.firstName}}</p>
-            <p>Favorite Sandwich: {{profile.favoriteSandwich}}</p>
             <button v-on:click="logout()" class="button is-primary">
                 Logout
             </button>
@@ -55,59 +53,36 @@
 </template>
 
 <script>
-  import appService from '../app.service'
   // import eventBus from '../event-bus'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     name: 'Login',
     data () {
       return {
         username: '', // bill
-        password: '', // vuejs
-        isAuthenticated: false,
-        profile: {}
+        password: '' // vuejs
       }
     },
     computed: {
       ...mapGetters(['isAuthenticated'])
     },
-    watch: {
-      /* isAuthenticated: function (val) {
-        if (val) {
-          appService.getProfile()
-            .then(profile => {
-              this.profile = profile
-            })
-        } else {
-          this.profile = {}
-        }
-        eventBus.$emit('authStatusUpdate', val)
-      } */
-    },
     methods: {
       login () {
-        appService.login({username: this.username, password: this.password})
-          .then((data) => {
-            window.localStorage.setItem('token', data.token)
-            window.localStorage.setItem('tokenExpiration', data.expiration)
-            // this.isAuthenticated = true
+        console.log('asd')
+        this.$store.dispatch('login', {
+          username: this.username,
+          password: this.password
+        })
+          .then(() => {
             this.username = ''
             this.password = ''
           })
-          .catch(() => window.alert('No puede entrar'))
       },
-      logout () {
-  
-        // this.isAuthenticated = false
-      }
-    },
-    created () {
-      let expiration = window.localStorage.getItem('tokenExpiration')
-      var unixTimestamp = new Date().getTime() / 1000
-      if (expiration !== null && parseInt(expiration) - unixTimestamp > 0) {
-        // this.isAuthenticated = true
-      }
+      ...mapActions({
+        logout: 'logout'
+      })
     }
+
   }
 </script>
 
