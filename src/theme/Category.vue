@@ -12,7 +12,27 @@
 <script>
   import Post from './Post.vue'
   import { mapGetters } from 'vuex'
+  const fetchInitialData = (store, route) => {
+    let categoryId = 2
+    switch (route.params.id) {
+      case 'front-end': {
+        categoryId = 2
+        break
+      }
+      case 'mobile': {
+        categoryId = 11
+        break
+      }
+      default: {
+        this.posts = []
+      }
+    }
+    store.dispatch('postsModule/updateCategory', categoryId)
+  }
   export default {
+    asyncData (store, route) {
+      return fetchInitialData(store, route)
+    },
     name: 'Category',
     components: {
       'app-post': Post
@@ -22,21 +42,7 @@
     },
     methods: {
       loadPosts () {
-        let categoryId = 2
-        switch (this.$route.params.id) {
-          case 'front-end': {
-            categoryId = 2
-            break
-          }
-          case 'mobile': {
-            categoryId = 11
-            break
-          }
-          default: {
-            this.posts = []
-          }
-        }
-        this.$store.dispatch('postsModule/updateCategory', categoryId)
+        return fetchInitialData(this.$store, this.$route)
       }
     },
     watch: {
